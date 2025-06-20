@@ -29,8 +29,7 @@
     /* Supplémentaire pour les effets cuivrés */
     --gradient-metallic: linear-gradient(90deg, #FFBA00, #b57e57, #2C318C);
 }
-
-
+    
 /* === BASE === */
 body {
     font-family: 'Inter', 'Roboto', sans-serif;
