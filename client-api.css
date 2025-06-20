@@ -1,0 +1,555 @@
+  <!-- Custom Stylesheet -->
+    <style>
+        /* ==========================================================================
+        1. Variables globales (couleurs, thèmes)
+        ========================================================================== */
+        :root {
+            --primary: #002d64; /* Bleu Québec profond – sérieux et enracinement */
+            --secondary: #caa948; /* Or royal – noblesse, héritage, distinction */
+            --accent: #ffffff; /* Blanc pur – clarté, souveraineté populaire */
+            --dark: #121212; /* Charbon très foncé – contraste fort */
+            --light: #f5f5f5; /* Gris clair – douceur, fond neutre */
+
+            --blue-dark: #041d3a; /* Variante foncée pour header ou footer */
+            --gold-bright: #f2d675; /* Variante plus vive pour survols */
+            --glass-bg: rgba(255, 255, 255, 0.1); /* Fond vitreux léger */
+            --glass-border: rgba(255, 255, 255, 0.25); /* Bordure subtile */
+            /* États hover */
+            --primary-hover: #041d3a;
+            --secondary-hover: #b5953e;
+        }
+
+        /* ==========================================================================
+        2. Base typographique & mises en page globales
+        ========================================================================== */
+        body {
+            font-family: 'Montserrat', 'Open Sans', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 80px; /* Adjust for fixed navbar */
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 3rem 0;
+        }
+
+        /* ==========================================================================
+        3. Boutons & couleurs utilitaires
+        ========================================================================== */
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+            .btn-primary:hover {
+                background-color: var(--primary-hover);
+                border-color: var(--primary-hover);
+            }
+
+        .bg-primary {
+            background-color: var(--primary) !important;
+        }
+
+        .text-secondary {
+            color: var(--secondary) !important;
+        }
+
+        /* ==========================================================================
+        4. Navigation (navbar, dropdowns)
+        ========================================================================== */
+        .navbar-dark.bg-dark-glass {
+            background: rgba(4, 29, 58, 0.7) !important;
+            color: white !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+            .navbar-dark.bg-dark-glass a {
+                color: white !important;
+            }
+
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.9) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 0.5rem 0;
+        }
+
+        .glass-dropdown {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Ensure dropdown items inherit white color for glass-dropdown */
+        .glass-dropdown .dropdown-item {
+            color: white !important;
+        }
+        .glass-dropdown .dropdown-item:hover,
+        .glass-dropdown .dropdown-item:focus {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+
+        /* ==========================================================================
+        5. Sections héro & parallax
+        ========================================================================== */
+        .hero {
+            position: relative;
+            /* Placeholder for BGDD1.jpg */
+            background: linear-gradient(135deg, rgba(0,86,179,0.85), rgba(0,105,217,0.9)), url('https://placehold.co/1920x600/002d64/ffffff?text=Hero+Background') center/cover no-repeat;
+            height: 25vh;
+            min-height: 300px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
+        }
+
+        .hero-title {
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-weight: 400;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-text {
+            max-width: 850px;
+            font-size: 1.1rem;
+            line-height: 1.75;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            word-break: break-word;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Adaptations mobiles pour .hero-text */
+        @media (max-width: 576px) {
+            .hero-text {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                padding: 2rem 1.25rem;
+            }
+
+                .hero-text h1 {
+                    font-size: 1.6rem;
+                    line-height: 1.4;
+                }
+
+                .hero-text p:not(.lead) {
+                    font-size: 0.92rem;
+                    text-align: justify;
+                    hyphens: auto;
+                }
+        }
+
+        /* ==========================================================================
+        6. Glass-morphism pour sections & modals
+        ========================================================================== */
+        .glass-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .glass-section:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
+            }
+
+        /* Glass pour modals */
+        .glass-modal {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Animation d’apparition des modals */
+        .modal.fade .modal-dialog {
+            transform: translateY(30px);
+            opacity: 0;
+        }
+
+        .modal.fade.show .modal-dialog {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ==========================================================================
+        7. Cartes (cards)
+        ========================================================================== */
+        .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+            .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            }
+
+        .card-title {
+            font-weight: 600;
+            color: var(--primary) !important;
+        }
+
+        /* ==========================================================================
+        8. Parallax section
+        ========================================================================== */
+        .parallax-section {
+            position: relative;
+            /* Dégradé + image fixe */
+            background: linear-gradient( to bottom, rgba(4, 29, 58, 0.85), rgba(4, 29, 58, 0.86) ), url('https://placehold.co/1920x600/041d3a/ffffff?text=Parallax+Background') center/cover no-repeat;
+            background-attachment: fixed; /* Effet parallax */
+            padding: 100px 0; /* Espace vertical */
+            color: #ffffff;
+        }
+
+            .parallax-section::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                /* Overlay supplémentaire pour renforcer le contraste */
+                background-color: rgba(4, 29, 58, 0.5);
+                z-index: 1;
+            }
+
+            .parallax-section .container {
+                position: relative;
+                z-index: 2; /* Pour que le contenu soit au-dessus de l’overlay */
+            }
+
+            .parallax-section h3 {
+                margin: 0;
+            }
+
+            .parallax-section .display-4 {
+                font-size: 3rem;
+                line-height: 1.2;
+            }
+
+            .parallax-section .btn-glass {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                backdrop-filter: blur(10px);
+                color: #fff;
+                transition: background 0.3s ease, border-color 0.3s ease;
+            }
+
+                .parallax-section .btn-glass:hover {
+                    background: rgba(255, 255, 255, 0.15);
+                    border-color: rgba(255, 255, 255, 0.4);
+                }
+
+        /* Adaptations tablettes (≤ 992px) */
+        @media (max-width: 992px) {
+            .parallax-section .display-4 {
+                font-size: 2.5rem;
+            }
+
+            .parallax-section h3.fw-lighter {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Adaptations mobiles (≤ 576px) */
+        @media (max-width: 576px) {
+            .parallax-section {
+                padding: 70px 0;
+                background-attachment: scroll; /* Désactivation partielle du parallax sur mobile */
+            }
+
+                .parallax-section .display-4 {
+                    font-size: 2rem;
+                }
+
+                .parallax-section h3.fw-lighter {
+                    font-size: 1.25rem;
+                }
+
+                .parallax-section .btn-glass {
+                    padding: 0.75rem 1.5rem;
+                    font-size: 0.9rem;
+                }
+        }
+
+        /* ==========================================================================
+        9. Footer & liens sociaux
+        ========================================================================== */
+        .footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 3rem 0;
+            margin-top: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+            .footer-links a {
+                color: white;
+                text-decoration: none;
+                transition: transform 0.3s ease, color 0.3s ease;
+            }
+
+                .footer-links a:hover {
+                    color: var(--secondary);
+                    transform: translateY(-2px);
+                }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+            .social-icons a {
+                color: white;
+                font-size: 1.5rem;
+                transition: transform 0.3s ease, color 0.3s ease;
+            }
+
+                .social-icons a:hover {
+                    color: var(--secondary);
+                    transform: scale(1.2);
+                }
+
+        /* ==========================================================================
+        10. Animation utilities
+        ========================================================================== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        /* ==========================================================================
+        11. Responsive overrides
+        ========================================================================== */
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 600px;
+                background-attachment: scroll;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .parallax-section {
+                background-attachment: scroll;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .card .card-body {
+                padding: 1.25rem;
+            }
+
+            .card-title {
+                font-size: 1.25rem;
+            }
+
+            .card-text {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            .glass-section {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        /* ==========================================================================
+        12. High-contrast mode
+        ========================================================================== */
+        .high-contrast {
+            background-color: black !important;
+            color: yellow !important;
+        }
+
+            .high-contrast a {
+                color: cyan !important;
+            }
+            body.high-contrast .navbar,
+            body.high-contrast .footer {
+                background-color: #000 !important;
+                border-color: #fff !important;
+            }
+            body.high-contrast .navbar-brand,
+            body.high-contrast .nav-link,
+            body.high-contrast .dropdown-item {
+                color: #00ff00 !important; /* Bright green for contrast */
+            }
+            body.high-contrast .glass-modal,
+            body.high-contrast .glass-section {
+                background-color: rgba(0, 0, 0, 0.9) !important;
+                border-color: #00ff00 !important;
+                color: #fff !important;
+            }
+            body.high-contrast .btn-close-white {
+                filter: invert(1); /* Invert color for contrast */
+            }
+
+
+        /* ==========================================================================
+        13. Modals — éléments spécifiques
+        ========================================================================== */
+        /* Breadcrumb modernisé */
+        .breadcrumb-modern {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+        }
+
+            .breadcrumb-modern .breadcrumb-item + .breadcrumb-item::before {
+                content: "›";
+                color: var(--secondary);
+                margin: 0 0.5rem;
+            }
+
+        /* Listes stylées */
+        .list-modern {
+            list-style: none;
+            padding-left: 0;
+        }
+
+            .list-modern li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin-bottom: 0.75rem;
+                font-size: 1.1rem;
+                line-height: 1.6;
+            }
+
+                .list-modern li::before {
+                    content: "✔";
+                    position: absolute;
+                    left: 0;
+                    top: 0.15rem;
+                    color: var(--primary);
+                    font-size: 1rem;
+                }
+
+        /* Titres et paragraphes dans modals */
+        .modal-body h2 {
+            color: var(--primary);
+        }
+
+        .modal-body p {
+            color: var(--dark);
+        }
+
+        /* Bouton de fermeture pour fond sombre */
+        .btn-close-white {
+            filter: invert(1);
+        }
+
+
+        .section-sei {
+            /* variables scoped */
+            --primary: #002d64;
+            --secondary: #caa948;
+            --accent: #ffffff;
+            --dark: #121212;
+            --light: #f5f5f5;
+            --glass-bg: rgba(255,255,255,0.1);
+            --glass-border: rgba(255,255,255,0.25);
+            --primary-hover: #041d3a;
+            --secondary-hover: #b5953e;
+        }
+
+
+            .section-sei .btn-primary {
+                background-color: var(--primary);
+                border-color: var(--primary);
+                transition: background-color .3s, border-color .3s;
+            }
+
+                .section-sei .btn-primary:hover {
+                    background-color: var(--primary-hover);
+                    border-color: var(--primary-hover);
+                }
+
+            .section-sei .glass-section {
+                background: var(--glass-bg);
+                backdrop-filter: blur(10px);
+                border: 1px solid var(--glass-border);
+                border-radius: .75rem;
+                padding: 2rem;
+                transition: transform .3s, box-shadow .3s;
+            }
+
+                .section-sei .glass-section:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 8px 32px rgba(31,38,135,0.25);
+                }
+
+            .section-sei .hero {
+                position: relative;
+                /* Placeholder for DD/BGDD1.jpg */
+                background: linear-gradient(135deg, rgba(0,86,179,0.85), rgba(0,105,217,0.9)), url('https://placehold.co/1920x600/002d64/ffffff?text=Hero+Background+SEI') center/cover no-repeat;
+                min-height: 300px;
+                color: var(--accent);
+                display: flex;
+                align-items: center;
+            }
+
+            .section-sei h2 {
+                font-size: 2rem;
+            }
+
+        @media (max-width:576px) {
+            .section-sei h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .section-sei .high-contrast {
+            background: #000 !important;
+            color: #ff0 !important;
+        }
+
+    </style>
