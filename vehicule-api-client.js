@@ -357,6 +357,149 @@
             }
         });
 
+  // Récupération des éléments des écrans
+    const vehiculeScreen = document.getElementById('vehiculeScreen');
+    const confirmationScreen = document.getElementById('confirmationScreen');
+    const alertScreen = document.getElementById('alertScreen');
+
+    // Fonction pour afficher l'écran du véhicule
+    function showVehiculeScreen() {
+        vehiculeScreen.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Empêche le défilement de l'arrière-plan
+    }
+
+    // Fonction pour masquer l'écran du véhicule
+    function hideVehiculeScreen() {
+        vehiculeScreen.classList.remove('active');
+        document.body.style.overflow = ''; // Réactive le défilement
+    }
+
+    // Fonction pour afficher l'écran de confirmation
+    function showConfirmationScreen(message, onConfirm) {
+        document.getElementById('confirmationMessage').textContent = message;
+        const confirmBtn = document.getElementById('confirmActionBtn');
+        // Cloner le bouton pour supprimer tous les écouteurs d'événements précédents
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+        newConfirmBtn.onclick = () => {
+            onConfirm();
+            hideConfirmationScreen();
+        };
+
+        confirmationScreen.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Fonction pour masquer l'écran de confirmation
+    function hideConfirmationScreen() {
+        confirmationScreen.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Fonction pour afficher l'écran d'alerte
+    function showAlertScreen(message) {
+        document.getElementById('alertMessage').textContent = message;
+        alertScreen.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Fonction pour masquer l'écran d'alerte
+    function hideAlertScreen() {
+        alertScreen.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Écouteur d'événement pour le bouton "Ajouter un Véhicule"
+    document.getElementById('addVehiculeBtn').addEventListener('click', showVehiculeScreen);
+
+    // Initialisation des tooltips Font Awesome (sans Bootstrap Tooltip)
+    // Nous allons utiliser une approche simple de titre HTML pour les tooltips, ou des classes Tailwind si nécessaire.
+    // Étant donné que Bootstrap n'est plus utilisé pour les modals, ses tooltips peuvent aussi être remplacés.
+    // Pour l'instant, le 'title' HTML suffit, sinon une implémentation JS/CSS plus complexe serait nécessaire.
+    // Les tooltips Bootstrap sont supprimés ici car Bootstrap JS n'est plus requis pour les modals.
+
+    // Code de gestion de l'export PDF et des opérations CRUD (à implémenter ou adapter selon votre ApiClient)
+    document.getElementById('exportPdfBtn').addEventListener('click', () => {
+        showAlertScreen('La fonctionnalité d\'exportation PDF sera implémentée ici !');
+        // Exemple de ce que jsPDF pourrait faire:
+        /*
+        const doc = new jspdf.jsPDF();
+        doc.text("Liste des Véhicules", 10, 10);
+        // doc.autoTable({ html: '#my-table-of-vehicles' }); // Si vous aviez une table
+        doc.save("vehicules.pdf");
+        */
+    });
+
+    document.getElementById('vehiculeForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Empêche le rechargement de la page
+        // Récupérer les valeurs du formulaire
+        const vehiculeData = {
+            nom: document.getElementById('vehiculeNom').value,
+            categorie: document.getElementById('vehiculeCategorie').value,
+            marque: document.getElementById('vehiculeMarque').value,
+            modele: document.getElementById('vehiculeModele').value,
+            annee: parseInt(document.getElementById('vehiculeAnnee').value),
+            couleur: document.getElementById('vehiculeCouleur').value,
+            vin: document.getElementById('vehiculeVin').value,
+            kilometrage: parseFloat(document.getElementById('vehiculeKilometrage').value),
+            prix: parseFloat(document.getElementById('vehiculePrix').value),
+            typeCarburant: document.getElementById('vehiculeTypeCarburant').value,
+            transmission: document.getElementById('vehiculeTransmission').value,
+            nbPortes: parseInt(document.getElementById('vehiculeNbPortes').value),
+            description: document.getElementById('vehiculeDescription').value,
+            imageUrl: document.getElementById('vehiculeImageUrl').value,
+        };
+
+        const unitIndex = document.getElementById('vehiculeUnitIndex').value;
+
+        if (unitIndex) {
+            // Logique de mise à jour (à adapter à votre ApiClient)
+            showAlertScreen(`Mise à jour du véhicule avec index ${unitIndex}: ${vehiculeData.nom}`);
+            console.log('Update Data:', vehiculeData);
+        } else {
+            // Logique d'ajout (à adapter à votre ApiClient)
+            showAlertScreen(`Ajout du nouveau véhicule: ${vehiculeData.nom}`);
+            console.log('Add Data:', vehiculeData);
+        }
+
+        // Simuler une réinitialisation du formulaire après soumission
+        this.reset();
+        hideVehiculeScreen();
+    });
+
+    // Remarque: Les fonctions d'édition et de suppression des véhicules devront être
+    // ajoutées pour déclencher le formulaire ou l'écran de confirmation.
+    // Par exemple, un bouton "Modifier" sur chaque carte de véhicule.
+
+    // Cette fonction serait appelée lorsque vous voulez éditer un véhicule
+    window.editVehicule = function(vehiculeId, initialData) {
+        document.getElementById('vehiculeUnitIndex').value = vehiculeId; // Stocke l'ID pour la modification
+        document.getElementById('vehiculeNom').value = initialData.nom;
+        document.getElementById('vehiculeCategorie').value = initialData.categorie;
+        document.getElementById('vehiculeMarque').value = initialData.marque;
+        document.getElementById('vehiculeModele').value = initialData.modele;
+        document.getElementById('vehiculeAnnee').value = initialData.annee;
+        document.getElementById('vehiculeCouleur').value = initialData.couleur;
+        document.getElementById('vehiculeVin').value = initialData.vin;
+        document.getElementById('vehiculeKilometrage').value = initialData.kilometrage;
+        document.getElementById('vehiculePrix').value = initialData.prix;
+        document.getElementById('vehiculeTypeCarburant').value = initialData.typeCarburant;
+        document.getElementById('vehiculeTransmission').value = initialData.transmission;
+        document.getElementById('vehiculeNbPortes').value = initialData.nbPortes;
+        document.getElementById('vehiculeDescription').value = initialData.description;
+        document.getElementById('vehiculeImageUrl').value = initialData.imageUrl;
+        showVehiculeScreen();
+    };
+
+    // Cette fonction serait appelée lorsque vous voulez supprimer un véhicule
+    window.deleteVehicule = function(vehiculeId, vehiculeNom) {
+        showConfirmationScreen(`Voulez-vous vraiment supprimer le véhicule "${vehiculeNom}" ?`, () => {
+            // Logique de suppression ici (appeler votre ApiClient)
+            showAlertScreen(`Le véhicule "${vehiculeNom}" a été supprimé.`);
+            console.log(`Deleting vehicule with ID: ${vehiculeId}`);
+        });
+    };
 
         // Initial data load and event listeners
         document.addEventListener('DOMContentLoaded', () => {
